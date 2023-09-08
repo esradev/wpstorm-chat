@@ -2,7 +2,7 @@ import React from 'react';
 
 const ChatWidgetIcon = ({ onClick }) => (
     <div
-        className="bg-blue-500 text-white rounded-full p-3 cursor-pointer hover:bg-blue-600 transition-all duration-300"
+        className="bg-blue-600 text-white rounded-full p-3 cursor-pointer hover:bg-blue-700 transition-all duration-300"
         onClick={onClick}
     >
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">

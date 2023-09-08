@@ -1,7 +1,7 @@
 import React from 'react';
 
 const ChatHeader = ({onClose}) => (
-    <div className="flex justify-between items-center mb-4 p-4 bg-blue-50 shadow-sm">
+    <div className="flex justify-between items-center p-4 bg-blue-50 shadow-sm">
         <button onClick={onClose} className="text-red-500 hover:text-red-700 text-2xl">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5}
                  stroke="currentColor" className="w-6 h-6">
