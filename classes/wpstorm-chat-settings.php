@@ -36,7 +36,14 @@ class Wpstorm_Chat_Settings
      */
     public function __construct()
     {
+        add_action('wp_enqueue_scripts', [$this, 'enqueue_chat_widget_script'], 99);
 
+    }
+
+    function enqueue_chat_widget_script() {
+        wp_enqueue_script('wpstorm-chat-widget', WPSTORM_CHAT_URL . 'assets/js/chat-widget.js', array('jquery'), WPSTORM_CHAT_VERSION, true);
+        wp_enqueue_script('wpstorm-chat-widget-app', WPSTORM_CHAT_URL . 'build/index.js', ['wpstorm-chat-widget', 'wp-element'], WPSTORM_CHAT_VERSION, true);
+        wp_enqueue_style('wpstorm-chat-widget-app', WPSTORM_CHAT_URL . 'build/index.css', [], WPSTORM_CHAT_VERSION, 'all');
     }
 
 }

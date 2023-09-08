@@ -70,7 +70,7 @@ class Wpstorm_Chat
          *
          * @since 1.0.0
          */
-        define('WPSTORM_CHAT_VERSION', '1.0.0');
+        define('WPSTORM_CHAT_VERSION', '1.0.1');
         define('WPSTORM_CHAT_FILE', __FILE__);
         define('WPSTORM_CHAT_PATH', plugin_dir_path(WPSTORM_CHAT_FILE));
         define('WPSTORM_CHAT_BASE', plugin_basename(WPSTORM_CHAT_FILE));
