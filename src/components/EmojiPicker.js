@@ -4,7 +4,7 @@ import data from '@emoji-mart/data';
 
 const EmojiPicker = ({ onEmojiSelect }) => (
     <div className="fixed right-4 bottom-4">
-        <Picker data={data} onSelect={onEmojiSelect} />
+        <Picker data={data} onEmojiSelect={onEmojiSelect} />
     </div>
 );
 

@@ -6,15 +6,11 @@ import ChatFooter from './components/ChatFooter';
 
 const App = () => {
     const [isChatOpen, setIsChatOpen] = useState(false);
-    const [showEmojiPicker, setShowEmojiPicker] = useState(false);
 
     const toggleChat = () => {
         setIsChatOpen(!isChatOpen);
     };
 
-    const toggleEmojiPicker = () => {
-        setShowEmojiPicker(!showEmojiPicker);
-    };
 
     // Add event listeners when the chat modal is open
     useEffect(() => {
@@ -43,7 +39,7 @@ const App = () => {
                 <div className="fixed right-4 bottom-4 min-w-[360px] max-w-[360px] bg-white rounded-lg shadow-lg chat-modal">
                     <ChatHeader onClose={toggleChat} />
                     <ChatBody />
-                    <ChatFooter onToggleEmojiPicker={toggleEmojiPicker} />
+                    <ChatFooter />
                 </div>
             )}
         </div>

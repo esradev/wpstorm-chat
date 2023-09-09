@@ -5,7 +5,7 @@ import {
     HiOutlineCloudArrowUp,
 } from 'react-icons/hi2';
 
-const VoiceRecordingComponent = ({startRecording}) => {
+const VoiceRecording = ({startRecording}) => {
     const [isRecording, setIsRecording] = useState(false);
     const [recordedTime, setRecordedTime] = useState(0);
     const [progress, setProgress] = useState(0);
@@ -154,4 +154,4 @@ const VoiceRecordingComponent = ({startRecording}) => {
     );
 };
 
-export default VoiceRecordingComponent;
+export default VoiceRecording;
