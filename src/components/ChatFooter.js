@@ -38,7 +38,6 @@ const ChatFooter = () => {
 
         if (selectedFile) {
             setSelectedFile(selectedFile);
-            console.log('Selected file:', selectedFile);
         } else {
             setSelectedFile(null);
         }
@@ -48,7 +47,7 @@ const ChatFooter = () => {
         setSelectedFile(null);
 
         // Reset the file input element
-        const fileInput = document.getElementById('fileInput');
+        const fileInput = document.getElementById('wpstormChatFileInput');
         if (fileInput) {
             fileInput.value = null;
         }
@@ -56,7 +55,7 @@ const ChatFooter = () => {
 
     const handleAttachFile = () => {
         // Trigger the click event on the file input
-        const fileInput = document.getElementById('fileInput');
+        const fileInput = document.getElementById('wpstormChatFileInput');
         if (fileInput) {
             fileInput.click();
         }

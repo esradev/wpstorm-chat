@@ -24,7 +24,7 @@ const ChatControls = ({
             <ChatControlsButton onClick={handleAttachFile} Icon={HiOutlinePaperClip}/>
             <input
                 type="file"
-                id="fileInput"
+                id="wpstormChatFileInput"
                 className="hidden"
                 onChange={handleFileSelect}
             />
