@@ -17,6 +17,6 @@ module.exports = {
         require("@tailwindcss/typography"),
         require('@tailwindcss/forms')
     ],
-    important: '.wpstorm-chat-widget-class',
+    important: '.wpstorm-chat-tailwind-class',
 }
 

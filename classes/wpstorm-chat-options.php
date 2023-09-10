@@ -36,7 +36,18 @@ class Wpstorm_Chat_Options
      */
     public function __construct()
     {
+        add_action( 'init', [ $this , 'register_setting_options' ] );
+    }
 
+    /**
+     * Register settings options.
+     *
+     * @return void
+     * @since 2.0.0
+     */
+    public function register_setting_options() {
+        $wpstorm_chat_setting_options = '';
+        add_option( 'farazsms_settings_options', $wpstorm_chat_setting_options );
     }
 
 }
