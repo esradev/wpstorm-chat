@@ -1,20 +1,47 @@
+import Dashboard from "../pages/Dashboard"
 import Settings from "../pages/Settings"
-import Style from "../pages/Style"
+import Styles from "../pages/Styles"
+import LiveUsers from "../pages/LiveUsers"
+import Operators from "../pages/Operators"
 
-import {TbSettings2, TbLogin} from "react-icons/tb"
+import {
+    HiOutlineSquares2X2,
+    HiOutlineCog6Tooth,
+    HiOutlinePaintBrush,
+    HiOutlineUserGroup,
+    HiOutlineIdentification
+} from "react-icons/hi2"
 
 const SidebarRoutes = [
     {
         path: '/',
         label: 'Dashboard',
-        component: Settings,
-        icon: TbSettings2,
+        component: Dashboard,
+        icon: HiOutlineSquares2X2,
     },
     {
-        path: '/style',
+        path: '/settings',
+        label: 'Settings',
+        component: Settings,
+        icon: HiOutlineCog6Tooth,
+    },
+    {
+        path: '/styles',
         label: "Style's",
-        component: Style,
-        icon: TbLogin,
+        component: Styles,
+        icon: HiOutlinePaintBrush,
+    },
+    {
+        path: '/live-users',
+        label: "Live User's",
+        component: LiveUsers,
+        icon: HiOutlineUserGroup,
+    },
+    {
+        path: '/Operators',
+        label: "Operaror's",
+        component: Operators,
+        icon: HiOutlineIdentification,
     },
 ]
 

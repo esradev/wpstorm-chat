@@ -2,7 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-
 /* Style the scrollbar track */
 .wpstorm-chat-scrollbar::-webkit-scrollbar {
     width: 5px; /* Set the width of the scrollbar */

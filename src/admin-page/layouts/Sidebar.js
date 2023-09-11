@@ -13,7 +13,7 @@ const Sidebar = () => {
 
     return (
         <div
-            className="flex grow gap-y-5 overflow-y-hidden overflow-x-hidden px-6 py-6 bg-white my-3 min-w-[260px] max-w-[260px] min-h-[90vh] max-h-[90vh]">
+            className="flex grow gap-y-5 overflow-y-hidden overflow-x-hidden p-6 bg-white my-3 min-w-[260px] max-w-[260px] min-h-[90vh] max-h-[90vh]">
             <nav className="flex flex-1 flex-col">
                 <ul role="list" className="flex flex-1 flex-col gap-y-7">
                     <li>
@@ -43,7 +43,7 @@ const Sidebar = () => {
                         </ul>
                     </li>
                     <li>
-                        <div className="text-xs font-semibold leading-6 text-gray-400">Your teams</div>
+                        <div className="text-xs font-semibold leading-6 text-gray-400">Conversations</div>
                         <ul role="list" className="-mx-2 mt-2 space-y-1">
                             <li>
                                 <a href="#"
@@ -51,22 +51,6 @@ const Sidebar = () => {
                                     <span
                                         className="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg border text-[0.625rem] font-medium bg-white text-gray-400 border-gray-200 group-hover:border-indigo-600 group-hover:text-indigo-600">H</span>
                                     <span className="truncate">Heroicons</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#"
-                                   className="text-gray-700 hover:text-indigo-600 hover:bg-gray-50 group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold">
-                                    <span
-                                        className="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg border text-[0.625rem] font-medium bg-white text-gray-400 border-gray-200 group-hover:border-indigo-600 group-hover:text-indigo-600">T</span>
-                                    <span className="truncate">Tailwind Labs</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#"
-                                   className="text-gray-700 hover:text-indigo-600 hover:bg-gray-50 group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold">
-                                    <span
-                                        className="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg border text-[0.625rem] font-medium bg-white text-gray-400 border-gray-200 group-hover:border-indigo-600 group-hover:text-indigo-600">W</span>
-                                    <span className="truncate">Workcation</span>
                                 </a>
                             </li>
                         </ul>
@@ -78,7 +62,7 @@ const Sidebar = () => {
                                  src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
                                  alt=""/>
                             <span className="sr-only">Your profile</span>
-                            <span aria-hidden="true">Tom Cook</span>
+                            <span aria-hidden="true">Account Settings</span>
                         </a>
                     </li>
                 </ul>

@@ -44,23 +44,22 @@ const App = () => {
 
     return (
         <HashRouter>
-            <StateContext.Provider value={state} >
+            <StateContext.Provider value={state}>
                 <DispatchContext.Provider value={dispatch}>
                     <div className="flex grow flex-col-2">
                         <Sidebar/>
-                        <div className="flex grow px-6 py-6 my-3">
-                            <div>
-                                <Routes>
-                                    {SidebarRoutes.map((route, index) => (
-                                        <Route
-                                            key={index}
-                                            path={route.path}
-                                            element={<route.component label={route.label}/>}
+                        <div
+                            className="wpstorm-chat-admin-scrollbar flex grow p-6 my-3.5 min-h-[90vh] max-h-[90vh] overflow-x-hidden overflow-y-scroll">
+                            <Routes>
+                                {SidebarRoutes.map((route, index) => (
+                                    <Route
+                                        key={index}
+                                        path={route.path}
+                                        element={<route.component label={route.label}/>}
 
-                                        />
-                                    ))}
-                                </Routes>
-                            </div>
+                                    />
+                                ))}
+                            </Routes>
                         </div>
                     </div>
                 </DispatchContext.Provider>
