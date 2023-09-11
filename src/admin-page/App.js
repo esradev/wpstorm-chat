@@ -49,14 +49,13 @@ const App = () => {
                     <div className="flex grow flex-col-2">
                         <Sidebar/>
                         <div
-                            className="wpstorm-chat-admin-scrollbar flex grow p-6 my-3.5 min-h-[90vh] max-h-[90vh] overflow-x-hidden overflow-y-scroll">
+                            className="wpstorm-chat-admin-scrollbar flex grow p-6 my-3 min-h-[90vh] max-h-[90vh] overflow-x-hidden overflow-y-scroll">
                             <Routes>
                                 {SidebarRoutes.map((route, index) => (
                                     <Route
                                         key={index}
                                         path={route.path}
                                         element={<route.component label={route.label}/>}
-
                                     />
                                 ))}
                             </Routes>
