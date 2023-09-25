@@ -53,8 +53,8 @@ class Wpstorm_Chat_Settings
     function enqueue_script()
     {
         wp_enqueue_script('wpstorm-chat-widget-init', WPSTORM_CHAT_URL . 'assets/js/chat-widget.js', array('jquery'), WPSTORM_CHAT_VERSION, true);
-        wp_enqueue_script('wpstorm-chat-widget-app', WPSTORM_CHAT_URL . 'build/index.js', ['wpstorm-chat-widget', 'wp-element'], WPSTORM_CHAT_VERSION, true);
-        wp_enqueue_style('wpstorm-chat-widget-app', WPSTORM_CHAT_URL . 'build/index.css', [], WPSTORM_CHAT_VERSION, 'all');
+        wp_enqueue_script('wpstorm-chat-widget-app', WPSTORM_CHAT_URL . 'build/chat-widget/index.js', ['wpstorm-chat-widget-init', 'wp-element'], WPSTORM_CHAT_VERSION, true);
+        wp_enqueue_style('wpstorm-chat-widget-app', WPSTORM_CHAT_URL . 'build/chat-widget/index.css', [], WPSTORM_CHAT_VERSION, 'all');
 
 
         /**
@@ -62,7 +62,7 @@ class Wpstorm_Chat_Settings
          * @see https://since1979.dev/snippet-014-setup-axios-for-the-wordpress-rest-api/
          */
         wp_localize_script(
-            'wpstorm-chat-widget',
+            'wpstorm-chat-widget-app',
             'wpstormChatJsObject',
             [
                 'rootapiurl' => esc_url_raw(rest_url()),
@@ -91,6 +91,16 @@ class Wpstorm_Chat_Settings
             ],
             WPSTORM_CHAT_VERSION,
             true
+        );
+
+        wp_localize_script(
+            'wpstorm-chat-admin-script',
+            'wpstormChatJsObject',
+            [
+                'rootapiurl' => esc_url_raw(rest_url()),
+                'nonce' => wp_create_nonce('wp_rest'),
+                'settingsUrl' => WPSTORM_CHAT_SETTINGS_LINK,
+            ]
         );
 
         // Load Farazsms languages for JavaScript files.

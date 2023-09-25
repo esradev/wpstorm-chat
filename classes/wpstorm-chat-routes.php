@@ -48,16 +48,20 @@ class Wpstorm_Chat_Routes
         $namespace = 'wpstorm_chat/v' . $version;
 
         //Register collect_user_data rest route
-        register_rest_route($namespace, '/' . 'collect_user_data', [
+        register_rest_route($namespace, '/' . 'users_data', [
             [
+                'methods' => 'GET',
+                'callback' => [$this, 'get_all_users_data'],
+                'permission_callback' => [$this, 'admin_permissions_check'],
+            ], [
                 'methods' => 'POST',
-                'callback' => [$this, 'collect_user_data'],
+                'callback' => [$this, 'collect_one_user_data'],
                 'permission_callback' => [$this, 'user_permissions_check'],
             ],
         ]);
     }
 
-    public function collect_user_data(WP_REST_Request $request)
+    public function collect_one_user_data(WP_REST_Request $request)
     {
         $user_data = $request->get_json_params();
 
@@ -137,7 +141,24 @@ class Wpstorm_Chat_Routes
         );
     }
 
+    /**
+     * Function to get all users data
+     *
+     * @param $request
+     * @return WP_Error|WP_HTTP_Response|WP_REST_Response
+     */
 
+    public function get_all_users_data($request)
+    {
+        global $wpdb;
+
+        $table_name = $wpdb->prefix . 'wpstorm_chat_users';
+
+        $query = "SELECT * FROM $table_name";
+        $results = $wpdb->get_results($query, ARRAY_A);
+
+        return rest_ensure_response($results);
+    }
     /**
      * Check if a given request has user permissions
      *

@@ -1,8 +1,8 @@
 import React from 'react';
 
-const ChatHeader = ({onClose}) => (
+const ChatHeader = ({toggleChat}) => (
     <div className="flex justify-between items-center p-4 bg-blue-50 shadow-sm">
-        <button onClick={onClose} className="text-red-500 hover:text-red-700 text-3xl">
+        <button onClick={toggleChat} className="text-red-500 hover:text-red-700 text-3xl">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5}
                  stroke="currentColor" className="w-6 h-6">
                 <path strokeLinecap="round" strokeLinejoin="round"

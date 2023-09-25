@@ -1,6 +1,21 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
+import AxiosWp from "../../api/AxiosWp"
 
 const LiveUsers = () => {
+    const [usersData, setUsersData] = useState([]);
+
+    useEffect(() => {
+        AxiosWp.get('/wpstorm_chat/v1/users_data')
+            .then(response => {
+                setUsersData(response.data);
+                console.log(response);
+            })
+            .catch(error => {
+                console.error('Error fetching data:', error);
+            });
+    }, []);
+
+
     return (
         <div className="inline-block align-top sm:px-6 lg:px-8 w-full">
             <table className="w-full min-w-full divide-y divide-gray-300 overflow-y-scroll">
@@ -25,276 +40,51 @@ const LiveUsers = () => {
                 </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-200">
-                <tr>
-                    <td className="whitespace-nowrap p-4 text-sm sm:pl-0">
-                        <div className="flex items-center">
-                            <div className="h-11 w-11 flex-shrink-0">
-                                <img className="h-11 w-11 rounded-full"
-                                     src="https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                                     alt=""/>
-                            </div>
-                            <div className="ml-4">
-                                <div className="font-medium text-gray-900">Lindsay Walton</div>
-                                <div className="mt-1 text-gray-500">lindsay.walton@example.com</div>
-                            </div>
-                        </div>
-                    </td>
-                    <td className="whitespace-nowrap px-3 py-5 text-sm text-gray-500">
-                        <div className="text-gray-900">Front-end Developer</div>
-                        <div className="mt-1 text-gray-500">Optimization</div>
-                    </td>
-                    <td className="whitespace-nowrap px-3 py-5 text-sm text-gray-500">
+                {usersData.length > 0 ? (
+                    usersData.map((user) => (
+                        <tr key={user.id}>
+                            <td className="whitespace-nowrap p-4 text-sm sm:pl-0">
+                                <div className="flex items-center">
+                                    <div className="h-11 w-11 flex-shrink-0">
+                                        <img
+                                            className="h-11 w-11 rounded-full"
+                                            src={user.user_avatar || 'user-alt-avatar'}
+                                            alt={user.user_name}
+                                        />
+                                    </div>
+                                    <div className="ml-4">
+                                        <div className="font-medium text-gray-900">{user.user_name}</div>
+                                        <div className="mt-1 text-gray-500">{user.user_email}</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td className="whitespace-nowrap px-3 py-5 text-sm text-gray-500">
+                                <div className="text-gray-900">{user.user_job_title}</div>
+                                <div className="mt-1 text-gray-500">{user.user_department}</div>
+                            </td>
+                            <td className="whitespace-nowrap px-3 py-5 text-sm text-gray-500">
                                 <span
-                                    class="inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20">Active</span>
-                    </td>
-                    <td class="whitespace-nowrap px-3 py-5 text-sm text-gray-500">Member</td>
-                    <td class="relative whitespace-nowrap py-5 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
-                        <a href="#" class="text-indigo-600 hover:text-indigo-900">Edit<span class="sr-only">, Lindsay Walton</span></a>
-                    </td>
-                </tr>
-                <tr>
-                    <td className="whitespace-nowrap p-4 text-sm sm:pl-0">
-                        <div className="flex items-center">
-                            <div className="h-11 w-11 flex-shrink-0">
-                                <img className="h-11 w-11 rounded-full"
-                                     src="https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                                     alt=""/>
-                            </div>
-                            <div className="ml-4">
-                                <div className="font-medium text-gray-900">Lindsay Walton</div>
-                                <div className="mt-1 text-gray-500">lindsay.walton@example.com</div>
-                            </div>
-                        </div>
-                    </td>
-                    <td className="whitespace-nowrap px-3 py-5 text-sm text-gray-500">
-                        <div className="text-gray-900">Front-end Developer</div>
-                        <div className="mt-1 text-gray-500">Optimization</div>
-                    </td>
-                    <td className="whitespace-nowrap px-3 py-5 text-sm text-gray-500">
-                                <span
-                                    class="inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20">Active</span>
-                    </td>
-                    <td class="whitespace-nowrap px-3 py-5 text-sm text-gray-500">Member</td>
-                    <td class="relative whitespace-nowrap py-5 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
-                        <a href="#" class="text-indigo-600 hover:text-indigo-900">Edit<span class="sr-only">, Lindsay Walton</span></a>
-                    </td>
-                </tr>
-                <tr>
-                    <td className="whitespace-nowrap p-4 text-sm sm:pl-0">
-                        <div className="flex items-center">
-                            <div className="h-11 w-11 flex-shrink-0">
-                                <img className="h-11 w-11 rounded-full"
-                                     src="https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                                     alt=""/>
-                            </div>
-                            <div className="ml-4">
-                                <div className="font-medium text-gray-900">Lindsay Walton</div>
-                                <div className="mt-1 text-gray-500">lindsay.walton@example.com</div>
-                            </div>
-                        </div>
-                    </td>
-                    <td className="whitespace-nowrap px-3 py-5 text-sm text-gray-500">
-                        <div className="text-gray-900">Front-end Developer</div>
-                        <div className="mt-1 text-gray-500">Optimization</div>
-                    </td>
-                    <td className="whitespace-nowrap px-3 py-5 text-sm text-gray-500">
-                                <span
-                                    class="inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20">Active</span>
-                    </td>
-                    <td class="whitespace-nowrap px-3 py-5 text-sm text-gray-500">Member</td>
-                    <td class="relative whitespace-nowrap py-5 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
-                        <a href="#" class="text-indigo-600 hover:text-indigo-900">Edit<span class="sr-only">, Lindsay Walton</span></a>
-                    </td>
-                </tr>
-                <tr>
-                    <td className="whitespace-nowrap p-4 text-sm sm:pl-0">
-                        <div className="flex items-center">
-                            <div className="h-11 w-11 flex-shrink-0">
-                                <img className="h-11 w-11 rounded-full"
-                                     src="https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                                     alt=""/>
-                            </div>
-                            <div className="ml-4">
-                                <div className="font-medium text-gray-900">Lindsay Walton</div>
-                                <div className="mt-1 text-gray-500">lindsay.walton@example.com</div>
-                            </div>
-                        </div>
-                    </td>
-                    <td className="whitespace-nowrap px-3 py-5 text-sm text-gray-500">
-                        <div className="text-gray-900">Front-end Developer</div>
-                        <div className="mt-1 text-gray-500">Optimization</div>
-                    </td>
-                    <td className="whitespace-nowrap px-3 py-5 text-sm text-gray-500">
-                                <span
-                                    class="inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20">Active</span>
-                    </td>
-                    <td class="whitespace-nowrap px-3 py-5 text-sm text-gray-500">Member</td>
-                    <td class="relative whitespace-nowrap py-5 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
-                        <a href="#" class="text-indigo-600 hover:text-indigo-900">Edit<span class="sr-only">, Lindsay Walton</span></a>
-                    </td>
-                </tr>
-                <tr>
-                    <td className="whitespace-nowrap p-4 text-sm sm:pl-0">
-                        <div className="flex items-center">
-                            <div className="h-11 w-11 flex-shrink-0">
-                                <img className="h-11 w-11 rounded-full"
-                                     src="https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                                     alt=""/>
-                            </div>
-                            <div className="ml-4">
-                                <div className="font-medium text-gray-900">Lindsay Walton</div>
-                                <div className="mt-1 text-gray-500">lindsay.walton@example.com</div>
-                            </div>
-                        </div>
-                    </td>
-                    <td className="whitespace-nowrap px-3 py-5 text-sm text-gray-500">
-                        <div className="text-gray-900">Front-end Developer</div>
-                        <div className="mt-1 text-gray-500">Optimization</div>
-                    </td>
-                    <td className="whitespace-nowrap px-3 py-5 text-sm text-gray-500">
-                                <span
-                                    class="inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20">Active</span>
-                    </td>
-                    <td class="whitespace-nowrap px-3 py-5 text-sm text-gray-500">Member</td>
-                    <td class="relative whitespace-nowrap py-5 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
-                        <a href="#" class="text-indigo-600 hover:text-indigo-900">Edit<span class="sr-only">, Lindsay Walton</span></a>
-                    </td>
-                </tr>
-                <tr>
-                    <td className="whitespace-nowrap p-4 text-sm sm:pl-0">
-                        <div className="flex items-center">
-                            <div className="h-11 w-11 flex-shrink-0">
-                                <img className="h-11 w-11 rounded-full"
-                                     src="https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                                     alt=""/>
-                            </div>
-                            <div className="ml-4">
-                                <div className="font-medium text-gray-900">Lindsay Walton</div>
-                                <div className="mt-1 text-gray-500">lindsay.walton@example.com</div>
-                            </div>
-                        </div>
-                    </td>
-                    <td className="whitespace-nowrap px-3 py-5 text-sm text-gray-500">
-                        <div className="text-gray-900">Front-end Developer</div>
-                        <div className="mt-1 text-gray-500">Optimization</div>
-                    </td>
-                    <td className="whitespace-nowrap px-3 py-5 text-sm text-gray-500">
-                                <span
-                                    class="inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20">Active</span>
-                    </td>
-                    <td class="whitespace-nowrap px-3 py-5 text-sm text-gray-500">Member</td>
-                    <td class="relative whitespace-nowrap py-5 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
-                        <a href="#" class="text-indigo-600 hover:text-indigo-900">Edit<span class="sr-only">, Lindsay Walton</span></a>
-                    </td>
-                </tr>
-                <tr>
-                    <td className="whitespace-nowrap p-4 text-sm sm:pl-0">
-                        <div className="flex items-center">
-                            <div className="h-11 w-11 flex-shrink-0">
-                                <img className="h-11 w-11 rounded-full"
-                                     src="https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                                     alt=""/>
-                            </div>
-                            <div className="ml-4">
-                                <div className="font-medium text-gray-900">Lindsay Walton</div>
-                                <div className="mt-1 text-gray-500">lindsay.walton@example.com</div>
-                            </div>
-                        </div>
-                    </td>
-                    <td className="whitespace-nowrap px-3 py-5 text-sm text-gray-500">
-                        <div className="text-gray-900">Front-end Developer</div>
-                        <div className="mt-1 text-gray-500">Optimization</div>
-                    </td>
-                    <td className="whitespace-nowrap px-3 py-5 text-sm text-gray-500">
-                                <span
-                                    class="inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20">Active</span>
-                    </td>
-                    <td class="whitespace-nowrap px-3 py-5 text-sm text-gray-500">Member</td>
-                    <td class="relative whitespace-nowrap py-5 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
-                        <a href="#" class="text-indigo-600 hover:text-indigo-900">Edit<span class="sr-only">, Lindsay Walton</span></a>
-                    </td>
-                </tr>
-                <tr>
-                    <td className="whitespace-nowrap p-4 text-sm sm:pl-0">
-                        <div className="flex items-center">
-                            <div className="h-11 w-11 flex-shrink-0">
-                                <img className="h-11 w-11 rounded-full"
-                                     src="https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                                     alt=""/>
-                            </div>
-                            <div className="ml-4">
-                                <div className="font-medium text-gray-900">Lindsay Walton</div>
-                                <div className="mt-1 text-gray-500">lindsay.walton@example.com</div>
-                            </div>
-                        </div>
-                    </td>
-                    <td className="whitespace-nowrap px-3 py-5 text-sm text-gray-500">
-                        <div className="text-gray-900">Front-end Developer</div>
-                        <div className="mt-1 text-gray-500">Optimization</div>
-                    </td>
-                    <td className="whitespace-nowrap px-3 py-5 text-sm text-gray-500">
-                                <span
-                                    class="inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20">Active</span>
-                    </td>
-                    <td class="whitespace-nowrap px-3 py-5 text-sm text-gray-500">Member</td>
-                    <td class="relative whitespace-nowrap py-5 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
-                        <a href="#" class="text-indigo-600 hover:text-indigo-900">Edit<span class="sr-only">, Lindsay Walton</span></a>
-                    </td>
-                </tr>
-                <tr>
-                    <td className="whitespace-nowrap p-4 text-sm sm:pl-0">
-                        <div className="flex items-center">
-                            <div className="h-11 w-11 flex-shrink-0">
-                                <img className="h-11 w-11 rounded-full"
-                                     src="https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                                     alt=""/>
-                            </div>
-                            <div className="ml-4">
-                                <div className="font-medium text-gray-900">Lindsay Walton</div>
-                                <div className="mt-1 text-gray-500">lindsay.walton@example.com</div>
-                            </div>
-                        </div>
-                    </td>
-                    <td className="whitespace-nowrap px-3 py-5 text-sm text-gray-500">
-                        <div className="text-gray-900">Front-end Developer</div>
-                        <div className="mt-1 text-gray-500">Optimization</div>
-                    </td>
-                    <td className="whitespace-nowrap px-3 py-5 text-sm text-gray-500">
-                                <span
-                                    class="inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20">Active</span>
-                    </td>
-                    <td class="whitespace-nowrap px-3 py-5 text-sm text-gray-500">Member</td>
-                    <td class="relative whitespace-nowrap py-5 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
-                        <a href="#" class="text-indigo-600 hover:text-indigo-900">Edit<span class="sr-only">, Lindsay Walton</span></a>
-                    </td>
-                </tr>
-                <tr>
-                    <td className="whitespace-nowrap p-4 text-sm sm:pl-0">
-                        <div className="flex items-center">
-                            <div className="h-11 w-11 flex-shrink-0">
-                                <img className="h-11 w-11 rounded-full"
-                                     src="https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                                     alt=""/>
-                            </div>
-                            <div className="ml-4">
-                                <div className="font-medium text-gray-900">Lindsay Walton</div>
-                                <div className="mt-1 text-gray-500">lindsay.walton@example.com</div>
-                            </div>
-                        </div>
-                    </td>
-                    <td className="whitespace-nowrap px-3 py-5 text-sm text-gray-500">
-                        <div className="text-gray-900">Front-end Developer</div>
-                        <div className="mt-1 text-gray-500">Optimization</div>
-                    </td>
-                    <td className="whitespace-nowrap px-3 py-5 text-sm text-gray-500">
-                                <span
-                                    class="inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20">Active</span>
-                    </td>
-                    <td class="whitespace-nowrap px-3 py-5 text-sm text-gray-500">Member</td>
-                    <td class="relative whitespace-nowrap py-5 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
-                        <a href="#" class="text-indigo-600 hover:text-indigo-900">Edit<span class="sr-only">, Lindsay Walton</span></a>
-                    </td>
-                </tr>
+                                    className="inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20">
+                                    Active
+                                </span>
+                            </td>
+                            <td className="whitespace-nowrap px-3 py-5 text-sm text-gray-500">Member</td>
+                            <td className="relative whitespace-nowrap py-5 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
+                                <a href="#" className="text-indigo-600 hover:text-indigo-900">
+                                    Edit<span className="sr-only">, {user.user_name}</span>
+                                </a>
+                            </td>
+                        </tr>
+                    ))
+                ) : (
+                    <tr>
+                        <td colSpan="5" className="text-center py-5">
+                            There are no users live on the site.
+                        </td>
+                    </tr>
+                )}
+
+
                 </tbody>
             </table>
         </div>

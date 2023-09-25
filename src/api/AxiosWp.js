@@ -15,7 +15,7 @@ import Axios from "axios";
  * @since 2.0.0
  */
 const AxiosWp = Axios.create({
-    baseURL: wpstormChatJsObject.rootapiurl,
+    baseURL: wpstormChatJsObject.rootapiurl + "/wpstorm_chat/v1/",
     headers: {
         "content-type": "application/json",
         "X-WP-Nonce": wpstormChatJsObject.nonce,
