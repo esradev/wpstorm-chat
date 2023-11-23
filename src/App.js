@@ -11,14 +11,44 @@ import AxiosWp from "./api/AxiosWp";
 const App = () => {
     const [isChatOpen, setIsChatOpen] = useState(false);
 
-    const toggleChat = () => {
-        setIsChatOpen(!isChatOpen);
-    };
-
     useEffect(() => {
         collectAndSendUserData();
     }, []);
 
+    useEffect(() => {
+        const handleEscKey = (event) => {
+            if (event.key === "Escape") {
+                setIsChatOpen(false);
+            }
+        };
+
+        if (isChatOpen) {
+            // Listen for the "Esc" key press
+            document.addEventListener("keydown", handleEscKey);
+        }
+
+        // Clean up event listeners when the chat modal is closed
+        return () => {
+            document.removeEventListener("keydown", handleEscKey);
+        };
+    }, [isChatOpen]);
+
+    /**
+     * Toggles the chat window open or closed.
+     *
+     * @function toggleChat
+     * @memberof global
+     * @returns {void}
+     */
+    const toggleChat = () => {
+        setIsChatOpen(!isChatOpen);
+    };
+
+    /**
+     * Collects user data and sends it to the server.
+     *
+     * @returns {Promise<void>} A promise that resolves when the user data is collected and sent successfully.
+     */
     async function collectAndSendUserData() {
         try {
             // Collect user data
@@ -40,7 +70,10 @@ const App = () => {
         }
     }
 
-    // Function to get device type
+    /**
+     * Retrieves the type of device based on the screen width.
+     * @returns {string} The type of device: "Mobile", "Tablet", or "Desktop".
+     */
     function getDeviceType() {
         const screenWidth = window.innerWidth;
         if (screenWidth < 768) {
@@ -52,7 +85,15 @@ const App = () => {
         }
     }
 
-    // Function to get user geolocation
+    /**
+     * Retrieves the geolocation coordinates (latitude and longitude) of the user.
+     *
+     * @return {Promise<{{ latitude: number, longitude: number }}|string>}
+     * A Promise that resolves to an object containing the latitude and longitude of the user's geolocation,
+     * or an empty string if geolocation is not available or the site is not using HTTPS.
+     *
+     * @throws {Error} If there are any errors fetching the geolocation.
+     */
     async function getUserGeolocation() {
         if ("geolocation" in navigator) {
             return new Promise((resolve, reject) => {
@@ -77,7 +118,11 @@ const App = () => {
         }
     }
 
-    // Function to get user IP address
+    /**
+     * Retrieves the user's IP address.
+     *
+     * @returns {Promise<*|string>} A promise that resolves with the user's IP address, or an empty string if there was an error fetching the IP address.
+     */
     async function getUserIpAddress() {
         try {
             const response = await Axios.get(
@@ -89,25 +134,6 @@ const App = () => {
             return ""; // Return an empty string or handle the error as needed
         }
     }
-
-    // Add event listeners when the chat modal is open
-    useEffect(() => {
-        const handleEscKey = (event) => {
-            if (event.key === "Escape") {
-                setIsChatOpen(false);
-            }
-        };
-
-        if (isChatOpen) {
-            // Listen for the "Esc" key press
-            document.addEventListener("keydown", handleEscKey);
-        }
-
-        // Clean up event listeners when the chat modal is closed
-        return () => {
-            document.removeEventListener("keydown", handleEscKey);
-        };
-    }, [isChatOpen]);
 
     return (
         <div className="fixed right-4 bottom-4">

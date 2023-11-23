@@ -17,7 +17,28 @@ const VoiceRecording = ({startRecording}) => {
 
     const prevTimeRef = useRef(0); // Use a ref to store the previous time
 
-    // Function to start recording
+    useEffect(() => {
+        if (startRecording) {
+            startRecordingFunc();
+        } else {
+            stopRecordingFunc();
+        }
+    }, [startRecording]);
+
+    useEffect(() => {
+        if (mediaRecorder) {
+            mediaRecorder.onstop = () => {
+                stream.getTracks().forEach((track) => track.stop());
+
+                const audioBlob = new Blob(audioChunks, {type: 'audio/wav'});
+                setAudioBlob(audioBlob);
+            };
+        }
+    }, [mediaRecorder, audioChunks]);
+
+    /**
+     * Function to start recording audio using the microphone.
+     */
     const startRecordingFunc = () => {
         setIsRecording(true);
 
@@ -63,7 +84,12 @@ const VoiceRecording = ({startRecording}) => {
             });
     };
 
-    // Function to pause recording
+
+    /**
+     * Pauses the recording if it is currently in progress.
+     * If the media recorder is in the 'recording' state, this function
+     * will pause the recording and clear the interval timer.
+     */
     const pauseRecordingFunc = () => {
         if (mediaRecorder && mediaRecorder.state === 'recording') {
             setIsRecording(false);
@@ -72,7 +98,10 @@ const VoiceRecording = ({startRecording}) => {
         }
     };
 
-    // Function to resume recording
+
+    /**
+     * Resumes the recording if it is in a paused state.
+     */
     const resumeRecordingFunc = () => {
         if (mediaRecorder && mediaRecorder.state === 'paused') {
             setIsRecording(true);
@@ -88,7 +117,11 @@ const VoiceRecording = ({startRecording}) => {
         }
     };
 
-    // Function to stop recording
+
+    /**
+     * Stops the recording if the mediaRecorder is currently recording or paused.
+     * Sets the isRecording state to false and stops the mediaRecorder.
+     */
     const stopRecordingFunc = () => {
         if (mediaRecorder && (mediaRecorder.state === 'recording' || mediaRecorder.state === 'paused')) {
             setIsRecording(false);
@@ -97,26 +130,12 @@ const VoiceRecording = ({startRecording}) => {
         }
     };
 
-    useEffect(() => {
-        if (startRecording) {
-            startRecordingFunc();
-        } else {
-            stopRecordingFunc();
-        }
-    }, [startRecording]);
-
-    useEffect(() => {
-        if (mediaRecorder) {
-            mediaRecorder.onstop = () => {
-                stream.getTracks().forEach((track) => track.stop());
-
-                const audioBlob = new Blob(audioChunks, {type: 'audio/wav'});
-                setAudioBlob(audioBlob);
-            };
-        }
-    }, [mediaRecorder, audioChunks]);
-
-    // Function to submit recorded audio to the backend
+    /**
+     * Submits the recording to the backend.
+     *
+     * @function submitRecording
+     * @returns {undefined}
+     */
     const submitRecording = () => {
         stopRecordingFunc();
         // Here, you can implement logic to send the audioBlob to the backend

@@ -31,13 +31,13 @@ const ChatControls = ({
 
             <ChatControlsButton onClick={handleToggleEmojiPicker} Icon={HiOutlineFaceSmile}/>
 
-            <ChatControlsButton onClick={handleRecordVoice} Icon={HiOutlineMicrophone}/>
+            {/*<ChatControlsButton onClick={handleRecordVoice} Icon={HiOutlineMicrophone}/>*/}
 
-            <ChatControlsButton onClick={handleRecordVideo} Icon={HiOutlineCamera}/>
+            {/*<ChatControlsButton onClick={handleRecordVideo} Icon={HiOutlineCamera}/>*/}
 
-            <ChatControlsButton onClick={handleSearch} Icon={HiOutlineMagnifyingGlass}/>
+            {/*<ChatControlsButton onClick={handleSearch} Icon={HiOutlineMagnifyingGlass}/>*/}
 
-            <ChatControlsButton onClick={handleChatSettings} Icon={HiOutlineCog6Tooth}/>
+            {/*<ChatControlsButton onClick={handleChatSettings} Icon={HiOutlineCog6Tooth}/>*/}
         </div>
     );
 };

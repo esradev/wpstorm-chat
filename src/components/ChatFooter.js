@@ -16,10 +16,22 @@ const ChatFooter = () => {
     const [isVoiceRecording, setIsVoiceRecording] = useState(false);
     const [isVideoRecording, setIsVideoRecording] = useState(false);
 
+    /**
+     * Function that handles input change event.
+     *
+     * @param {object} e - The event object.
+     */
     const handleInputChange = (e) => {
         setMessage(e.target.value);
     };
 
+
+    /**
+     * Handles sending a message.
+     * If the message is not empty, it sends the message and clears the input field.
+     *
+     * @function handleSendMessage
+     */
     const handleSendMessage = () => {
         if (message.trim() !== '') {
             // Implement your message sending logic here
@@ -28,10 +40,22 @@ const ChatFooter = () => {
         }
     };
 
+
+    /**
+     * Toggles the state of the Emoji Picker.
+     * @function handleToggleEmojiPicker
+     * @returns {void}
+     */
     const handleToggleEmojiPicker = () => {
         setIsEmojiPickerOpen(prevState => !prevState); // Toggle the state
     };
 
+    /**
+     * Function to handle file selection and update the selected file
+     *
+     * @param {Event} e - The event object containing the selected file
+     * @returns {void}
+     */
     const handleFileSelect = (e) => {
         // Handle file selection logic here
         const selectedFile = e.target.files[0];
@@ -43,6 +67,13 @@ const ChatFooter = () => {
         }
     };
 
+    /**
+     * Function to handle deselecting a file.
+     *
+     * This function sets the selected file to null and resets the file input element.
+     *
+     * @function handleDeselectFile
+     */
     const handleDeselectFile = () => {
         setSelectedFile(null);
 
@@ -53,6 +84,14 @@ const ChatFooter = () => {
         }
     };
 
+    /**
+     * Triggers the click event on the file input element with the ID "wpstormChatFileInput".
+     * This function is typically used to handle file attachment by simulating a click on the file input.
+     *
+     * @function handleAttachFile
+     * @memberof global
+     * @returns {void}
+     */
     const handleAttachFile = () => {
         // Trigger the click event on the file input
         const fileInput = document.getElementById('wpstormChatFileInput');
@@ -61,24 +100,56 @@ const ChatFooter = () => {
         }
     };
 
+    /**
+     * Toggles the recording of voice.
+     *
+     * @function
+     * @name toggleRecordVoice
+     */
     const toggleRecordVoice = () => {
         setIsVoiceRecording((prevIsRecording) => !prevIsRecording);
     }
 
+    /**
+     * Toggles the recordVideo state.
+     *
+     * @function toggleRecordVideo
+     * @returns {void}
+     */
     const toggleRecordVideo = () => {
         setIsVideoRecording((prevIsRecording) => !prevIsRecording);
     }
 
 
+    /**
+     * Handles the search operation.
+     *
+     * @function handleSearch
+     * @returns {void}
+     */
     const handleSearch = () => {
         console.log('Searching ...');
     }
 
+    /**
+     * Open chat settings.
+     *
+     * @function handleChatSettings
+     * @returns {void}
+     */
     const handleChatSettings = () => {
         // Implement logic to open chat settings
         console.log('Opening chat settings...');
     };
 
+    /**
+     * Handles the selection of an emoji.
+     * Closes the EmojiPicker by toggling the state and appends the selected emoji to the message.
+     * Updates the message state.
+     *
+     * @param {string} emoji - The selected emoji.
+     * @returns {void}
+     */
     const handleEmojiSelect = (emoji) => {
         // Close the EmojiPicker by toggling the state
         handleToggleEmojiPicker();

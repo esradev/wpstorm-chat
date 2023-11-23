@@ -13,6 +13,13 @@ const VideoRecording = () => {
     const timerRef = useRef(null);
     const mediaRecorderRef = useRef(null);
 
+    /**
+     * Starts a timer for video recording.
+     *
+     * This function starts a timer to track the duration of a video recording. It updates the video recording duration at an interval of 1 second.
+     *
+     * @returns {void}
+     */
     const startVideoRecordingTimer = () => {
         let startTime = Date.now();
         timerRef.current = setInterval(() => {
@@ -22,12 +29,31 @@ const VideoRecording = () => {
         }, 1000);
     };
 
+    /**
+     * Stops the video recording timer.
+     * Clears the interval for the timer reference, sets it to null, and resets the video recording duration to 0.
+     *
+     * @function stopVideoRecordingTimer
+     * @returns {void}
+     */
     const stopVideoRecordingTimer = () => {
         clearInterval(timerRef.current);
         timerRef.current = null;
         setVideoRecordingDuration(0);
     };
 
+    /**
+     * Handle recording video.
+     *
+     * This function starts or pauses video recording based on the current state of the recording.
+     * If video recording is not currently in progress, it will request access to the user's camera,
+     * set the video stream as the source object for the live preview, and start recording video data.
+     *
+     * @async
+     * @function handleRecordVideo
+     * @returns {Promise<void>} - A promise that resolves when the video recording is handled.
+     * @throws {Error} The error encountered while accessing the camera.
+     */
     const handleRecordVideo = async () => {
         try {
             if (!isVideoRecording) {
@@ -85,6 +111,12 @@ const VideoRecording = () => {
     };
 
 
+    /**
+     * Stops the recording if media recorder is available and video recording is in progress.
+     *
+     * @function handleStopRecording
+     * @returns {void}
+     */
     const handleStopRecording = () => {
         if (mediaRecorderRef.current && isVideoRecording) {
             mediaRecorderRef.current.stop();
