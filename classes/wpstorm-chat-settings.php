@@ -103,8 +103,8 @@ class Wpstorm_Chat_Settings
             ]
         );
 
-        // Load Farazsms languages for JavaScript files.
-        wp_set_script_translations('wpstorm-chat-admin-script', 'farazsms', WPSTORM_CHAT_PATH . '/languages');
+        // Load Wpstorm chat languages for JavaScript files.
+        wp_set_script_translations('wpstorm-chat-admin-script', 'wpstorm-chat', WPSTORM_CHAT_PATH . '/languages');
     }
 
     /**
@@ -144,7 +144,7 @@ class Wpstorm_Chat_Settings
      *
      * @return void
      */
-    public function admin_page()
+    public function admin_page() 
     {
         ?>
         <div class="wrap">

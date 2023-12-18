@@ -47,7 +47,7 @@ class Wpstorm_Chat_Options
      */
     public function register_setting_options() {
         $wpstorm_chat_setting_options = '';
-        add_option( 'farazsms_settings_options', $wpstorm_chat_setting_options );
+        add_option( 'wpstorm_chat_settings_options', $wpstorm_chat_setting_options );
     }
 
 }
