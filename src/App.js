@@ -132,7 +132,7 @@ const App = () => {
   }
 
   return (
-    <div className='fixed right-4 bottom-4 z-10000 prose'>
+    <div className='fixed right-4 bottom-4 z-100000'>
       <ChatWidgetIcon onClick={toggleChat} />
 
       {isChatOpen && (
