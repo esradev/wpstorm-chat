@@ -36,7 +36,7 @@ class Wpstorm_Chat_Options
      */
     public function __construct()
     {
-        add_action( 'init', [ $this , 'register_setting_options' ] );
+        add_action('init', [$this, 'register_setting_options']);
     }
 
     /**
@@ -45,11 +45,11 @@ class Wpstorm_Chat_Options
      * @return void
      * @since 2.0.0
      */
-    public function register_setting_options() {
+    public function register_setting_options()
+    {
         $wpstorm_chat_setting_options = '';
-        add_option( 'wpstorm_chat_settings_options', $wpstorm_chat_setting_options );
+        add_option('wpstorm_chat_settings_options', $wpstorm_chat_setting_options);
     }
-
 }
 
 Wpstorm_Chat_Options::get_instance();

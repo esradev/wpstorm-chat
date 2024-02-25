@@ -5,6 +5,7 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
+
 class Wpstorm_Chat_Database
 {
 
@@ -75,6 +76,7 @@ class Wpstorm_Chat_Database
         user_agent TEXT,
         ip_address VARCHAR(45),
         user_language VARCHAR(10),
+        last_seen TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     ) $charset_collate;";
 
@@ -114,10 +116,9 @@ class Wpstorm_Chat_Database
         require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
         dbDelta($sql);
 
-        // This option added for redirect after activation
+        // This option added for redirect after activation.
         add_option('wpstorm_chat_do_activation_redirect', true);
     }
-
 }
 
 Wpstorm_Chat_Database::get_instance();

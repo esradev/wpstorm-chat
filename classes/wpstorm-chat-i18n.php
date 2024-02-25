@@ -10,14 +10,15 @@
  */
 
 // Exit if accessed directly.
-if ( ! defined( 'ABSPATH' ) ) {
+if (!defined('ABSPATH')) {
     exit;
 }
 
 /**
  * Class Wpstorm_Chat_I18n.
  */
-class Wpstorm_Chat_I18n {
+class Wpstorm_Chat_I18n
+{
     /**
      * Instance
      *
@@ -33,8 +34,9 @@ class Wpstorm_Chat_I18n {
      * @return object Initialized object of class.
      * @since 1.0.0
      */
-    public static function get_instance() {
-        if ( ! isset( self::$instance ) ) {
+    public static function get_instance()
+    {
+        if (!isset(self::$instance)) {
             self::$instance = new self();
         }
 
@@ -44,8 +46,9 @@ class Wpstorm_Chat_I18n {
     /**
      * Constructor
      */
-    public function __construct() {
-        add_action( 'plugins_loaded', [$this, 'load_plugin_textdomain'] );
+    public function __construct()
+    {
+        add_action('plugins_loaded', [$this, 'load_plugin_textdomain']);
     }
 
     /**
@@ -66,4 +69,3 @@ class Wpstorm_Chat_I18n {
 }
 
 Wpstorm_Chat_I18n::get_instance();
-

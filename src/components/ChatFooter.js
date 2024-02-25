@@ -1,6 +1,7 @@
 import React, { useState, useRef } from 'react'
-import EmojiPicker from './EmojiPicker'
 
+import AxiosWp from '../api/AxiosWp'
+import EmojiPicker from './EmojiPicker'
 import VoiceRecording from './VoiceRecording'
 import VideoRecording from './VideoRecording'
 import ChatInputTextArea from './ChatInputTextArea'
@@ -34,8 +35,19 @@ const ChatFooter = () => {
   const handleSendMessage = () => {
     if (message.trim() !== '' || selectedFile) {
       // Implement logic to send the message and file
-      console.log('Sending message ...:', message)
-      console.log('Sending file ...:', selectedFile)
+      try {
+        console.log('Sending message ...:', message)
+
+        AxiosWp.post('messages', message)
+          .then((response) => {
+            console.log(response.data)
+          })
+          .catch((error) => {
+            console.error(error)
+          })
+      } catch (error) {
+        console.error(error)
+      }
 
       // Clear the message and file input fields
       setMessage('')

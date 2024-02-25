@@ -1,4 +1,5 @@
 <?php
+
 // Exit if accessed directly.
 if (!defined('ABSPATH')) {
     exit;
@@ -144,15 +145,14 @@ class Wpstorm_Chat_Settings
      *
      * @return void
      */
-    public function admin_page() 
+    public function admin_page()
     {
-        ?>
+?>
         <div class="wrap">
             <div id="wpstorm-chat-settings-dashboard" class="wpstorm-chat-tailwind-class"></div>
         </div>
-        <?php
+<?php
     }
-
 }
 
 Wpstorm_Chat_Settings::get_instance();

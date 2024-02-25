@@ -1,7 +1,7 @@
 /**
  * Import remote dependencies.
  */
-import Axios from "axios";
+import Axios from 'axios'
 
 /**
  *
@@ -15,11 +15,11 @@ import Axios from "axios";
  * @since 2.0.0
  */
 const AxiosWp = Axios.create({
-    baseURL: wpstormChatJsObject.rootapiurl + "/wpstorm_chat/v1/",
-    headers: {
-        "content-type": "application/json",
-        "X-WP-Nonce": wpstormChatJsObject.nonce,
-    },
-});
+  baseURL: wpstormChatJsObject.rootapiurl + 'wpstorm_chat/v1',
+  headers: {
+    'content-type': 'application/json',
+    'X-WP-Nonce': wpstormChatJsObject.nonce,
+  },
+})
 
-export default AxiosWp;
+export default AxiosWp
