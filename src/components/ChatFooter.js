@@ -1,29 +1,54 @@
-import React, { useState, useRef } from 'react'
-
-import AxiosWp from '../api/AxiosWp'
+import React, { useState } from 'react'
+import { useImmerReducer } from 'use-immer'
 import EmojiPicker from './EmojiPicker'
-import VoiceRecording from './VoiceRecording'
-import VideoRecording from './VideoRecording'
+import AxiosWp from '../api/AxiosWp'
+import { HiOutlinePaperClip, HiOutlineFaceSmile, HiOutlineMicrophone, HiOutlineCamera, HiOutlineMagnifyingGlass, HiOutlineCog6Tooth } from 'react-icons/hi2'
+
 import ChatInputTextArea from './ChatInputTextArea'
 import SelectedFileDisplay from './SelectedFileDisplay'
-import ChatControls from './ChatControls'
+import ChatControlsButton from './ChatControlsButton'
 import ChatSendButton from './ChatSendButton'
 
 const ChatFooter = () => {
-  const [message, setMessage] = useState('')
-  const [isEmojiPickerOpen, setIsEmojiPickerOpen] = useState(false)
-  const [selectedFile, setSelectedFile] = useState(null)
+  const initialState = {
+    message: '',
+    selectedFile: null,
+    isEmojiPickerOpen: false,
+    isVoiceRecording: false,
+    isVideoRecording: false
+  }
 
-  const [isVoiceRecording, setIsVoiceRecording] = useState(false)
-  const [isVideoRecording, setIsVideoRecording] = useState(false)
+  const reducer = (draft, action) => {
+    switch (action.type) {
+      case 'SET_MESSAGE':
+        draft.message = action.payload
+        break
+      case 'SET_SELECTED_FILE':
+        draft.selectedFile = action.payload
+        break
+      case 'TOGGLE_EMOJI_PICKER':
+        draft.isEmojiPickerOpen = !draft.isEmojiPickerOpen
+        break
+      case 'TOGGLE_VOICE_RECORDING':
+        draft.isVoiceRecording = !draft.isVoiceRecording
+        break
+      case 'TOGGLE_VIDEO_RECORDING':
+        draft.isVideoRecording = !draft.isVideoRecording
+        break
+      default:
+        break
+    }
+  }
+
+  const [state, dispatch] = useImmerReducer(reducer, initialState)
 
   /**
    * Function that handles input change event.
    *
    * @param {object} e - The event object.
    */
-  const handleInputChange = (e) => {
-    setMessage(e.target.value)
+  const handleInputChange = e => {
+    dispatch({ type: 'SET_MESSAGE', payload: e.target.value })
   }
 
   /**
@@ -33,16 +58,16 @@ const ChatFooter = () => {
    * @function handleSendMessage
    */
   const handleSendMessage = () => {
-    if (message.trim() !== '' || selectedFile) {
+    if (state.message.trim() !== '' || state.selectedFile) {
       // Implement logic to send the message and file
       try {
-        console.log('Sending message ...:', message)
+        console.log('Sending message ...:', state.message)
 
-        AxiosWp.post('messages', message)
-          .then((response) => {
+        AxiosWp.post('messages', state.message)
+          .then(response => {
             console.log(response.data)
           })
-          .catch((error) => {
+          .catch(error => {
             console.error(error)
           })
       } catch (error) {
@@ -50,18 +75,9 @@ const ChatFooter = () => {
       }
 
       // Clear the message and file input fields
-      setMessage('')
-      setSelectedFile(null)
+      dispatch({ type: 'SET_MESSAGE', payload: '' })
+      dispatch({ type: 'SET_SELECTED_FILE', payload: null })
     }
-  }
-
-  /**
-   * Toggles the state of the Emoji Picker.
-   * @function handleToggleEmojiPicker
-   * @returns {void}
-   */
-  const handleToggleEmojiPicker = () => {
-    setIsEmojiPickerOpen((prevState) => !prevState) // Toggle the state
   }
 
   /**
@@ -70,15 +86,11 @@ const ChatFooter = () => {
    * @param {Event} e - The event object containing the selected file
    * @returns {void}
    */
-  const handleFileSelect = (e) => {
+  const handleFileSelect = e => {
     // Handle file selection logic here
     const selectedFile = e.target.files[0]
 
-    if (selectedFile) {
-      setSelectedFile(selectedFile)
-    } else {
-      setSelectedFile(null)
-    }
+    dispatch({ type: 'SET_SELECTED_FILE', payload: selectedFile })
   }
 
   /**
@@ -89,7 +101,7 @@ const ChatFooter = () => {
    * @function handleDeselectFile
    */
   const handleDeselectFile = () => {
-    setSelectedFile(null)
+    dispatch({ type: 'SET_SELECTED_FILE', payload: null })
 
     // Reset the file input element
     const fileInput = document.getElementById('wpstormChatFileInput')
@@ -115,47 +127,6 @@ const ChatFooter = () => {
   }
 
   /**
-   * Toggles the recording of voice.
-   *
-   * @function
-   * @name toggleRecordVoice
-   */
-  const toggleRecordVoice = () => {
-    setIsVoiceRecording((prevIsRecording) => !prevIsRecording)
-  }
-
-  /**
-   * Toggles the recordVideo state.
-   *
-   * @function toggleRecordVideo
-   * @returns {void}
-   */
-  const toggleRecordVideo = () => {
-    setIsVideoRecording((prevIsRecording) => !prevIsRecording)
-  }
-
-  /**
-   * Handles the search operation.
-   *
-   * @function handleSearch
-   * @returns {void}
-   */
-  const handleSearch = () => {
-    console.log('Searching ...')
-  }
-
-  /**
-   * Open chat settings.
-   *
-   * @function handleChatSettings
-   * @returns {void}
-   */
-  const handleChatSettings = () => {
-    // Implement logic to open chat settings
-    console.log('Opening chat settings...')
-  }
-
-  /**
    * Handles the selection of an emoji.
    * Closes the EmojiPicker by toggling the state and appends the selected emoji to the message.
    * Updates the message state.
@@ -163,26 +134,58 @@ const ChatFooter = () => {
    * @param {string} emoji - The selected emoji.
    * @returns {void}
    */
-  const handleEmojiSelect = (emoji) => {
-    // Close the EmojiPicker by toggling the state
-    handleToggleEmojiPicker()
+  const handleEmojiSelect = emoji => {
+    dispatch({ type: 'TOGGLE_EMOJI_PICKER' })
 
-    // Append the selected emoji to the message and update the message state
-    setMessage((currentMessage) => currentMessage + emoji.native)
+    dispatch({ type: 'SET_MESSAGE', payload: state.message + emoji.native })
   }
+
+  const chatControlsItems = [
+    {
+      icon: HiOutlinePaperClip,
+      onClick: handleAttachFile,
+      hiddenInput: true,
+      hiddenInputType: 'file',
+      hiddenInputId: 'wpstormChatFileInput',
+      hiddenInputChange: handleFileSelect
+    },
+    {
+      icon: HiOutlineFaceSmile,
+      onClick: () => dispatch({ type: 'TOGGLE_EMOJI_PICKER' })
+    }
+    // {
+    //   icon: HiOutlineMicrophone,
+    //   onClick: () => dispatch({ type: 'TOGGLE_VOICE_RECORDING' })
+    // },
+    // {
+    //   icon: HiOutlineCamera,
+    //   onClick: () => dispatch({ type: 'TOGGLE_VIDEO_RECORDING' })
+    // },
+    // {
+    //   icon: HiOutlineMagnifyingGlass,
+    //   onClick: () => console.log('Search')
+    // },
+    // {
+    //   icon: HiOutlineCog6Tooth,
+    //   onClick: () => console.log('Settings')
+    // }
+  ]
 
   return (
     <>
-      {isEmojiPickerOpen && <EmojiPicker onEmojiSelect={handleEmojiSelect} />}
-      <div className='flex items-start space-x-4 p-4 border-t-blue-100 border-t-2'>
-        <div className='min-w-0 flex-1'>
-          <form action='#'>
-            <ChatInputTextArea message={message} handleInputChange={handleInputChange} />
-            {selectedFile && <SelectedFileDisplay selectedFile={selectedFile} handleDeselectFile={handleDeselectFile} />}
-            {isVoiceRecording && <VoiceRecording startRecording={true} />}
-            {isVideoRecording && <VideoRecording isVideoRecording={isVideoRecording} toggleRecordVideo={toggleRecordVideo} />}
-            <div className='flex justify-between items-center pt-2'>
-              <ChatControls handleAttachFile={handleAttachFile} handleFileSelect={handleFileSelect} handleChatSettings={handleChatSettings} handleSearch={handleSearch} handleRecordVideo={toggleRecordVideo} handleRecordVoice={toggleRecordVoice} handleToggleEmojiPicker={handleToggleEmojiPicker} />
+      {state.isEmojiPickerOpen && <EmojiPicker onEmojiSelect={handleEmojiSelect} />}
+      <div className="flex items-start space-x-4 p-4 border-t-blue-100 border-t-2">
+        <div className="min-w-0 flex-1">
+          <form action="#">
+            <ChatInputTextArea message={state.message} handleInputChange={handleInputChange} />
+            {state.selectedFile && <SelectedFileDisplay selectedFile={state.selectedFile} handleDeselectFile={handleDeselectFile} />}
+            <div className="flex justify-between items-center pt-2">
+              <div className="flex items-center space-x-5">
+                {chatControlsItems.map((item, index) => (
+                  <ChatControlsButton key={index} item={item} />
+                ))}
+              </div>
+
               <ChatSendButton handleSendMessage={handleSendMessage} />
             </div>
           </form>

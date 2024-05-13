@@ -1,5 +1,9 @@
 import React, { useState, useEffect } from 'react'
+import { useImmerReducer } from 'use-immer'
 import Axios from 'axios'
+
+import AppStateContext from './context/AppStateContext'
+import AppDispatchContext from './context/AppDispatchContext'
 
 import ChatWidgetIcon from './components/ChatWidgetIcon'
 import ChatHeader from './components/ChatHeader'
@@ -9,7 +13,21 @@ import ChatFooter from './components/ChatFooter'
 import AxiosWp from './api/AxiosWp'
 
 const App = () => {
-  const [isChatOpen, setIsChatOpen] = useState(false)
+  const initialState = {
+    isChatOpen: true
+  }
+
+  const reducer = (draft, action) => {
+    switch (action.type) {
+      case 'TOGGLE_CHAT':
+        draft.isChatOpen = !draft.isChatOpen
+        break
+      default:
+        break
+    }
+  }
+
+  const [state, dispatch] = useImmerReducer(reducer, initialState)
 
   useEffect(() => {
     // collectAndSendUserData()
@@ -18,11 +36,10 @@ const App = () => {
   useEffect(() => {
     const handleEscKey = event => {
       if (event.key === 'Escape') {
-        setIsChatOpen(false)
+        dispatch({ type: 'TOGGLE_CHAT' })
       }
     }
-
-    if (isChatOpen) {
+    if (state.isChatOpen) {
       // Listen for the "Esc" key press
       document.addEventListener('keydown', handleEscKey)
     }
@@ -31,18 +48,7 @@ const App = () => {
     return () => {
       document.removeEventListener('keydown', handleEscKey)
     }
-  }, [isChatOpen])
-
-  /**
-   * Toggles the chat window open or closed.
-   *
-   * @function toggleChat
-   * @memberof global
-   * @returns {void}
-   */
-  const toggleChat = () => {
-    setIsChatOpen(!isChatOpen)
-  }
+  }, [state.isChatOpen])
 
   /**
    * Collects user data and sends it to the server.
@@ -132,17 +138,21 @@ const App = () => {
   }
 
   return (
-    <div className="fixed right-4 bottom-4 z-100000">
-      <ChatWidgetIcon onClick={toggleChat} />
+    <AppStateContext.Provider value={state}>
+      <AppDispatchContext.Provider value={dispatch}>
+        <div className="fixed right-4 bottom-4 z-100000">
+          <ChatWidgetIcon />
 
-      {isChatOpen && (
-        <div className="fixed right-4 bottom-4 min-w-[360px] max-w-[360px] max-h-[95%] bg-white rounded-lg shadow-lg chat-modal">
-          <ChatHeader toggleChat={toggleChat} />
-          <ChatBody />
-          <ChatFooter />
+          {state.isChatOpen && (
+            <div className="fixed right-4 bottom-4 min-w-[360px] max-w-[360px] max-h-[95%] bg-white rounded-lg shadow-lg chat-modal">
+              <ChatHeader />
+              <ChatBody />
+              <ChatFooter />
+            </div>
+          )}
         </div>
-      )}
-    </div>
+      </AppDispatchContext.Provider>
+    </AppStateContext.Provider>
   )
 }
 
