@@ -12,11 +12,11 @@ const App = () => {
   const [isChatOpen, setIsChatOpen] = useState(false)
 
   useEffect(() => {
-    collectAndSendUserData()
+    // collectAndSendUserData()
   }, [])
 
   useEffect(() => {
-    const handleEscKey = (event) => {
+    const handleEscKey = event => {
       if (event.key === 'Escape') {
         setIsChatOpen(false)
       }
@@ -57,7 +57,7 @@ const App = () => {
         ipAddress: await getUserIpAddress(),
         language: navigator.language,
         deviceType: getDeviceType(),
-        geolocation: await getUserGeolocation(),
+        geolocation: await getUserGeolocation()
       }
 
       // Send user data to the server
@@ -98,13 +98,13 @@ const App = () => {
     if ('geolocation' in navigator) {
       return new Promise((resolve, reject) => {
         navigator.geolocation.getCurrentPosition(
-          (position) => {
+          position => {
             const latitude = position.coords.latitude
             const longitude = position.coords.longitude
             resolve({ latitude, longitude })
           },
 
-          (error) => {
+          error => {
             console.error('Error fetching geolocation:', error)
             resolve('')
           }
@@ -132,11 +132,11 @@ const App = () => {
   }
 
   return (
-    <div className='fixed right-4 bottom-4 z-100000'>
+    <div className="fixed right-4 bottom-4 z-100000">
       <ChatWidgetIcon onClick={toggleChat} />
 
       {isChatOpen && (
-        <div className='fixed right-4 bottom-4 min-w-[360px] max-w-[360px] max-h-[95%] bg-white rounded-lg shadow-lg chat-modal'>
+        <div className="fixed right-4 bottom-4 min-w-[360px] max-w-[360px] max-h-[95%] bg-white rounded-lg shadow-lg chat-modal">
           <ChatHeader toggleChat={toggleChat} />
           <ChatBody />
           <ChatFooter />
